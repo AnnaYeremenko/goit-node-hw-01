@@ -5,7 +5,8 @@
   },
   "dependencies": {
     "uuid": "^9.0.0",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.1",
+    "yarn": "^1.22.19"
   },
   "name": "goit-node-hw-01",
   "version": "1.0.0",
@@ -16,6 +17,5 @@
   "description": "",
   "devDependencies": {
     "nodemon": "^2.0.22"
-    
   }
 }

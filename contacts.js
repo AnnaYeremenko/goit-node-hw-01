@@ -4,20 +4,41 @@ const path = require('path');
 
 
  const contactsPath = path.join(__dirname, 'db/contacts.json');
-
+console.log(contactsPath);
 // TODO: задокументувати кожну функцію
-function listContacts() {
-    // ...твій код
-  }
+const listContacts = async () => {
+  const data = await fs.readFile(contactsPath);
+  const contacts = JSON.parse(data);
+  return contacts;
+  };
   
-  function getContactById(contactId) {
-    // ...твій код
-  }
+const getContactById = async contactId => {
+   const contacts = await listContacts();
+   const contact = contacts.find(item => item.id === contactId.toString());
+   if (!contact) {
+    return null;
+   }
+   return contact;
+  };
   
-  function removeContact(contactId) {
-    // ...твій код
-  }
+  const removeContact = async contactId => {
+    const contacts = await listContacts();
+    const index = contacts.findIndex(item => item.id === contactId.toString());
+    if (index === -1) {
+      return null;
+    }
+    const [removeContact] = contacts.splice(index, 1);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts));
+    return removeContact;
+  };
   
-  function addContact(name, email, phone) {
-    // ...твій код
-  }
+  const addContact = async ({ name, email, phone }) => {
+    const contacts = await listContacts();
+    const newContact = { name, email, phone, id: v4() };
+    contacts.push(newContact);
+    await fs.writeFile(contactsPath, JSON.stringify(contacts));
+    return newContact;
+   
+  };
+
+  module.exports = { listContacts, getContactById, removeContact, addContact}
